@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamWeave - Team Collaboration Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="logo">
+                    <h1>TeamWeave</h1>
+                    <p>Collaborate. Create. Succeed.</p>
+                </div>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginEmail" class="form-label">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="demo@teamweave.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="demo123" required>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">Sign In</button>
+                <div class="auth-links">
+                    <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                    <a href="#" id="showSignupLink">Create Account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Screen -->
+    <div id="signupScreen" class="screen hidden">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="logo">
+                    <h1>TeamWeave</h1>
+                    <p>Join the Team</p>
+                </div>
+            </div>
+            
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <label for="signupName" class="form-label">Full Name</label>
+                    <input type="text" id="signupName" class="form-control" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail" class="form-label">Email</label>
+                    <input type="email" id="signupEmail" class="form-control" placeholder="you@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword" class="form-label">Password</label>
+                    <input type="password" id="signupPassword" class="form-control" placeholder="Create password" required>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">Create Account</button>
+                <div class="auth-links">
+                    <a href="#" id="showLoginLink">Already have an account? Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardScreen" class="screen hidden">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>TeamWeave</h1>
+                </div>
+                <div class="header-right">
+                    <button id="userMenuBtn" class="btn btn--outline btn--sm">
+                        <span id="userAvatar" class="user-avatar">DU</span>
+                        <span id="userName">Demo User</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <div class="dashboard-header">
+                <h2>Your Projects</h2>
+                <button id="newProjectBtn" class="btn btn--primary">
+                    <span class="btn-icon">+</span>
+                    New Project
+                </button>
+            </div>
+
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <h3 id="totalProjects">3</h3>
+                    <p>Projects</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalTasks">38</h3>
+                    <p>Tasks</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="completedTasks">20</h3>
+                    <p>Completed</p>
+                </div>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Project cards will be populated by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Project Detail Screen -->
+    <div id="projectDetailScreen" class="screen hidden">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <button id="backToDashboardBtn" class="btn btn--outline btn--sm">← Back</button>
+                    <h1 id="projectTitle">Project Name</h1>
+                </div>
+                <div class="header-right">
+                    <button id="addTaskBtn" class="btn btn--primary btn--sm">+ Add Task</button>
+                    <button id="userMenuBtn2" class="btn btn--outline btn--sm">
+                        <span id="userAvatar2" class="user-avatar">DU</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="project-main">
+            <div class="project-info">
+                <p id="projectDescription">Project description will appear here</p>
+                <div class="project-members" id="projectMembers">
+                    <!-- Member avatars will be populated -->
+                </div>
+                <div class="project-progress">
+                    <div class="progress-info">
+                        <span id="projectProgressText">7 of 12 tasks completed</span>
+                        <span id="projectProgressPercent">58%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="projectProgressFill" class="progress-fill" style="width: 58%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-board">
+                <div class="task-columns">
+                    <div class="task-column" data-status="To Do">
+                        <h3>To Do <span class="task-count" id="todoCount">0</span></h3>
+                        <div class="task-list" id="todoList"></div>
+                    </div>
+                    <div class="task-column" data-status="In Progress">
+                        <h3>In Progress <span class="task-count" id="progressCount">0</span></h3>
+                        <div class="task-list" id="progressList"></div>
+                    </div>
+                    <div class="task-column" data-status="Review">
+                        <h3>Review <span class="task-count" id="reviewCount">0</span></h3>
+                        <div class="task-list" id="reviewList"></div>
+                    </div>
+                    <div class="task-column" data-status="Done">
+                        <h3>Done <span class="task-count" id="doneCount">0</span></h3>
+                        <div class="task-list" id="doneList"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- New Project Modal -->
+<div id="newProjectModal" class="modal hidden">
+  <div class="modal-overlay" id="newProjectModalOverlay"></div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="newProjectModalTitle">Create New Project</h3>
+      <button id="closeNewProjectModal" class="modal-close">×</button>
+    </div>
+    <form id="newProjectForm" class="modal-body">
+      <div class="form-group">
+        <label for="projectName" class="form-label">Project Name</label>
+        <input type="text" id="projectName" class="form-control" placeholder="e.g. Sprint Alpha" required>
+      </div>
+      <div class="form-group">
+        <label for="projectDescriptionInput" class="form-label">Description</label>
+        <textarea id="projectDescriptionInput" class="form-control" rows="3" placeholder="Short description"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="projectColor" class="form-label">Accent Color</label>
+          <input type="color" id="projectColor" class="form-control" value="#2563EB">
+        </div>
+        <div class="form-group">
+          <label for="projectDueDate" class="form-label">Due Date</label>
+          <input type="date" id="projectDueDate" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="projectMembersSelect" class="form-label">Members</label>
+        <select id="projectMembersSelect" class="form-control" multiple size="4">
+          <!-- options populated by JS -->
+        </select>
+        <small>Hold Ctrl/Cmd to multi-select</small>
+      </div>
+      <div class="form-actions">
+        <button type="button" id="cancelNewProjectBtn" class="btn btn--outline">Cancel</button>
+        <button type="submit" class="btn btn--primary" id="saveNewProjectBtn">Create Project</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal hidden">
+        <div class="modal-overlay" id="taskModalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="taskModalTitle">Add New Task</h3>
+                <button id="closeTaskModal" class="modal-close">×</button>
+            </div>
+            <form id="taskForm" class="modal-body">
+                <div class="form-group">
+                    <label for="taskTitle" class="form-label">Task Title</label>
+                    <input type="text" id="taskTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription" class="form-label">Description</label>
+                    <textarea id="taskDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskAssignee" class="form-label">Assignee</label>
+                        <select id="taskAssignee" class="form-control">
+                            <option value="">Unassigned</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskPriority" class="form-label">Priority</label>
+                        <select id="taskPriority" class="form-control">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskDueDate" class="form-label">Due Date</label>
+                        <input type="date" id="taskDueDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="taskStatus" class="form-label">Status</label>
+                        <select id="taskStatus" class="form-control">
+                            <option value="To Do">To Do</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Review">Review</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancelTaskBtn" class="btn btn--outline">Cancel</button>
+                    <button type="submit" class="btn btn--primary" id="saveTaskBtn">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div id="profileModal" class="modal hidden">
+        <div class="modal-overlay" id="profileModalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Profile & Settings</h3>
+                <button id="closeProfileModal" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-section">
+                    <div class="profile-avatar-large">
+                        <span id="profileAvatar">DU</span>
+                    </div>
+                    <h4 id="profileName">Demo User</h4>
+                    <p id="profileEmail">demo@teamweave.com</p>
+                    <p id="profileRole">Team Member</p>
+                </div>
+                
+                <div class="settings-section">
+                    <h5>Notification Preferences</h5>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            Email notifications
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="taskReminders" checked>
+                            Task reminders
+                        </label>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button id="logoutBtn" class="btn btn--outline btn--full-width">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation (Bottom) -->
+    <nav id="mobileNav" class="mobile-nav hidden">
+        <button class="nav-item active" data-screen="dashboard">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" data-screen="tasks">
+            <span class="nav-icon">✓</span>
+            <span class="nav-label">Tasks</span>
+        </button>
+        <button class="nav-item" data-screen="profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
